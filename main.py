@@ -23,9 +23,10 @@ posts: list[dict] = [
     },
 ]
 
-
+ 
 @app.get("/", include_in_schema=False,name="home")
 @app.get("/posts",include_in_schema=False,name="posts")
+
 def home(request: Request):
     return templates.TemplateResponse(
         request,
@@ -36,9 +37,15 @@ def home(request: Request):
 
 
 
-@app.get("/api/posts/{post_id}")
-def get_post(post_id:int):
+@app.get("/posts/{post_id}",include_in_schema=False)
+def get_post(request:Request,post_id:int):
     for post in posts:
         if post.get("id")==post_id:
-            return post
+            title =post['title'] [:50]
+            return templates.TemplateResponse(
+                request,
+                "post.html", 
+                {"posts": posts,"title":"Home"},
+
+            )
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="post not found")
