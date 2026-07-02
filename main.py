@@ -37,7 +37,7 @@ def home(request: Request):
 
 
 
-@app.get("/posts/{post_id}",include_in_schema=False)
+@app.get("/posts/{post_id}",include_in_schema=False,name="post_page")
 def get_post(request:Request,post_id:int):
     for post in posts:
         if post.get("id")==post_id:
@@ -45,7 +45,7 @@ def get_post(request:Request,post_id:int):
             return templates.TemplateResponse(
                 request,
                 "post.html", 
-                {"posts": posts,"title":"Home"},
+                {"post": post, "title": title},
 
             )
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="post not found")
