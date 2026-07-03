@@ -60,7 +60,7 @@ def general_http_exception_handler(request: Request, exception: StarletteHTTPExc
     message = (
         exception.detail
         if exception.detail
-        else "An error occurred. Please check your request and try again."
+        else "An error occurred. Please check your request and try again." #value_if_true if condition else value_if_false ( this is ternary operation)
     )
 
     if request.url.path.startswith("/api"):
